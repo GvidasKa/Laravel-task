@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Blog;
 use Illuminate\Http\Request;
 
-class BlogController extends Controller
+class BlogsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::latest()->page(5);
+        $blogs = Blog::latest()->paginate(5);
         return view('blogs.index', compact('blogs'))->with('i',(request()->input('page',1)-1)*5);
     }
 
@@ -25,7 +25,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        //
+        return view('blogs.create');
     }
 
     /**
@@ -36,7 +36,15 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        Blog::create($request->all());
+
+        return redirect()->route('blogs.index')
+            ->with('success','Blog created successfully.');
     }
 
     /**
@@ -47,7 +55,7 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
+        return view('blogs.show',compact('blog'));
     }
 
     /**
