@@ -14,7 +14,8 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
+        $blogs = Blog::latest()->page(5);
+        return view('blogs.index', compact('blogs'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /**
