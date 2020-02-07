@@ -66,7 +66,7 @@ class BlogsController extends Controller
      */
     public function edit(Blog $blog)
     {
-        //
+        return view('blogs.edit', compact('blog'));
     }
 
     /**
@@ -78,7 +78,15 @@ class BlogsController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $blog->update($request->all());
+
+        return redirect()->route('blogs.index')
+            ->with('success','Blog updated successfully');
     }
 
     /**
@@ -89,6 +97,9 @@ class BlogsController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        $blog->delete();
+
+        return redirect()->route('blogs.index')
+            ->with('success','Blogs deleted successfully');
     }
 }
