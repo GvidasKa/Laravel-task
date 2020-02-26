@@ -8,7 +8,12 @@
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('blogs.create') }}"> Create new blogs</a>
+                <form action="{{route('logout')}}" method="post" style="display: inline-block;">
+                    @csrf
+                    <button class="btn btn-secondary">Logout</button>
+                </form>
             </div>
+
         </div>
     </div>
 
@@ -26,8 +31,9 @@
             <th width="250px">Action</th>
         </tr>
         @foreach ($blogs as $blog)
+            @if($blog->user_id == Auth::user()->id)
             <tr>
-                <td>{{ ++$i }}</td>
+                <td>{{ $i++ }}</td>
                 <td>{{ $blog->title }}</td>
                 <td>{{ $blog->description }}</td>
                 <td>
@@ -44,6 +50,7 @@
                     </form>
                 </td>
             </tr>
+                @endif
         @endforeach
     </table>
 

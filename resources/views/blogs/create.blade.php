@@ -26,6 +26,7 @@
     <form action="{{ route('blogs.store') }}" method="POST">
         @csrf
         <div class="row">
+            <input type="number" name="user_id" class="form-control" style="display:none;" value="{{Auth::user()->id}}">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Title:</strong>

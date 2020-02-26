@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class BlogsController extends Controller
 {
+
+    public function __construct () {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,6 +41,7 @@ class BlogsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id' => 'required',
             'title' => 'required',
             'description' => 'required',
         ]);
@@ -79,6 +84,7 @@ class BlogsController extends Controller
     public function update(Request $request, Blog $blog)
     {
         $request->validate([
+            'user_id' => 'required',
             'title' => 'required',
             'description' => 'required',
         ]);
